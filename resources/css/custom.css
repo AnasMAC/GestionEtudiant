@@ -1,0 +1,105 @@
+/* public/css/custom.css */
+
+/* 1. Global Styles */
+body {
+    background-color: #f4f6f9; /* Soft gray background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* 2. Navbar Styling */
+.navbar {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* 3. Card Styling (The "Container" for your content) */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    background: white;
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden; /* Keeps header corners rounded */
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1.2rem;
+    color: #0d6efd;
+}
+
+/* 4. Table Styling */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+    border-bottom: 2px solid #eee;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 5. Button Styling */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background: #0d6efd;
+    box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px rgba(13, 110, 253, 0.3);
+}
+
+/* 6. Login Page Specifics */
+.login-card {
+    margin-top: 80px;
+    border-top: 5px solid #0d6efd;
+}
+
+/* 7. Profile Page Specifics */
+.profile-header {
+    background: linear-gradient(135deg, #6610f2 0%, #520dc2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+}

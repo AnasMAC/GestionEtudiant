@@ -7,22 +7,23 @@
             <div class="card-body p-4">
 
                 <div class="text-center mb-4">
-                    <h3 class="fw-bold text-primary">Connexion</h3>
-                    <p class="text-muted small">Accédez à votre espace étudiant ou admin</p>
+                    <h3 class="fw-bold text-primary">Réinitialisation</h3>
+                    <p class="text-muted small">Entrez votre email pour recevoir le lien</p>
                 </div>
 
-                <form action="{{ route('login') }}" method="POST">
+                <form action="{{ route('password.email') }}" method="POST">
                     @csrf
 
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label class="form-label text-muted small">Email</label>
                         <input type="email" name="email" class="form-control form-control-lg bg-light border-0" placeholder="exemple@ensat.ac.ma" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label class="form-label text-muted small">Mot de passe</label>
-                        <input type="password" name="password" class="form-control form-control-lg bg-light border-0" placeholder="••••••••" required>
+                    @if (session('success'))
+                    <div class="alert alert-success py-2 text-center border-0 shadow-sm mb-3">
+                        <small>{{ session('success') }}</small>
                     </div>
+                    @endif
 
                     @if($errors->any())
                     <div class="alert alert-danger py-2 text-center border-0 shadow-sm mb-3">
@@ -31,11 +32,13 @@
                     @endif
 
                     <button type="submit" class="btn btn-primary w-100 btn-lg shadow-sm">
-                        Se connecter
+                        Envoyer le lien
                     </button>
 
                     <div class="text-center mt-3">
-                        <a href="{{ route('password.request') }}" class="small text-decoration-none">Mot de passe oublié ?</a>
+                        <a href="{{ route('login') }}" class="small text-decoration-none text-muted">
+                            <i class="fas fa-arrow-left me-1"></i> Retour à la connexion
+                        </a>
                     </div>
 
                 </form>

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Kreait\Firebase\Contract\Auth as FirebaseAuth;
 
 class StudentController extends Controller
 {
@@ -39,6 +40,8 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      * This creates BOTH a User and a Student record.
      */
+    // Inject FirebaseAuth into the controller
+    public function __construct(protected FirebaseAuth $firebaseAuth) {}
     public function store(Request $request)
     {
         $this->authorizeAdmin();
@@ -53,21 +56,34 @@ class StudentController extends Controller
         ]);
 
         // 2. Create the User Login first
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'student', // Default role is student
-        ]);
+        try {
+            // 1. Create User in Firebase
+            $createdUser = $this->firebaseAuth->createUser([
+                'email' => $request->email,
+                'password' => $request->password,
+                'displayName' => $request->name,
+            ]);
 
-        // 3. Create the Student Profile linked to that User
-        Student::create([
-            'user_id' => $user->id,
-            'cne' => $request->cne,
-            'filiere' => $request->filiere,
-        ]);
+            // 2. Create User in MariaDB (Linked via UID)
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'firebase_uid' => $createdUser->uid, // <--- The Link!
+                'role' => 'student',
+                'password' => null, // We don't save passwords in MariaDB anymore!
+            ]);
 
-        return redirect()->route('students.index')->with('success', 'Étudiant créé avec succès');
+            // 3. Create Student Profile
+            Student::create([
+                'user_id' => $user->id,
+                'cne' => $request->cne,
+                'filiere' => $request->filiere,
+            ]);
+
+            return redirect()->route('students.index')->with('success', 'Étudiant créé (Firebase + MariaDB) !');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Erreur Firebase: ' . $e->getMessage()]);
+        }
     }
 
     /**
