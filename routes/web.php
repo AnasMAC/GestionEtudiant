@@ -11,7 +11,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-
+Route::post('/login/google', [AuthController::class, 'loginWithGoogle'])->name('login.google');
 // 2. Protected Routes (Must be logged in)
 Route::middleware(['auth'])->group(function () {
 

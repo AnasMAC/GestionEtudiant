@@ -11,7 +11,8 @@ services:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
     depends_on:
       - db
-
+    command: >
+      sh -c "until php artisan db:monitor > /dev/null 2>&1; do echo 'Waiting for DB...'; sleep 1; done; php artisan migrate --force; apache2-foreground"
   # The Database
   db:
     image: mariadb:10.6
